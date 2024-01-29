@@ -39,7 +39,7 @@ const storageModel = (() => {
 
 var displayController =  (() => {
 
-    let button = document.querySelectorAll('.toggle');
+    let toggleButton = document.querySelectorAll('.toggle');
     let isDisplayType;
     let formContainer;
 
@@ -60,7 +60,7 @@ var displayController =  (() => {
             formContainer.style.display = 'none'; 
     }
 
-    button.forEach((element) => element.addEventListener('click', () => {
+    toggleButton.forEach((button) => button.addEventListener('click', () => {
 
         formContainer = document.getElementById('add-item');
         isDisplayType = window.getComputedStyle(formContainer).display;
