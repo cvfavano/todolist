@@ -59,19 +59,33 @@ body {
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4); 
 }
+.form-modal > .container {
+    display: grid;
 
-#add-item.form-modal > .container  {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%; 
   }
-
+  .form-modal > .container > div {
+   grid-template-columns: 100%;
+  }
 
   .close-button {
     color: #aaa;
-    float: right;
-    font-size: 28px;
+    justify-self: end ;
+    font-size: 18px;
     font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 4px;;
+
+  }
+
+  #submit-form {
+    justify-self: center;
+    padding: 5px 15px;
+    height: 30px;
+    border-radius: 21px;
+    border: 1px solid #ccc;
   }
