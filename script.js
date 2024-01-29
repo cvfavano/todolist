@@ -38,46 +38,41 @@ const storageModel = (() => {
 //create an onclick event for add item
 
 var displayController =  (() => {
+
     let button = document.querySelectorAll('.toggle');
     let isDisplayType;
-    console.log(button);
-    button.forEach((element) => element.addEventListener('click', function() {
-       
-        let formContainer = document.getElementById('add-item');
-         isDisplayType = window.getComputedStyle(formContainer).display;
-        console.log(isDisplayType)
-        
-        function getModalState(element) {
+    let formContainer;
+
+    function getModalState(element) {
             if (element == 'block') 
                 return true
             
             else return false
-        }
-    
-        
-      //  console.log(isDisplay)
-       function toggle() {
-
-            var isDisplay = getModalState(isDisplayType);
-        if(!isDisplay ) {
-            formContainer.style.display = 'block'; 
-            console.log({'1': isDisplay});
-        }
-        else {
-            
-            formContainer.style.display = 'none'; 
-            console.log({2:isDisplay});
-        }   
     }
-     
-    toggle();
+
+    function toggle() {
+        let isDisplay = getModalState(isDisplayType);
+    
+        if(!isDisplay ) 
+            formContainer.style.display = 'block';    
+    
+        else 
+            formContainer.style.display = 'none'; 
+    }
+
+    button.forEach((element) => element.addEventListener('click', () => {
+
+        formContainer = document.getElementById('add-item');
+        isDisplayType = window.getComputedStyle(formContainer).display;
+        toggle();
+   
     }));
     
       
     return {
-      //  toggle
+     
     }
-})(); //displayController() => toggle for now
+})(); //displayController() => 
 
 
 storageModel.toDoList();
