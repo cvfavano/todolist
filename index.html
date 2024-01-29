@@ -22,7 +22,7 @@
                     <button class="add-item push toggle">Add Item</button>
                     <div class="form-modal " id="add-item"> 
                         <div class="container">
-
+                            <p>Add a To Do Item</p>
                             <button class="close-button toggle"> x</button>
                             <div>
                             <label>Title</label>
@@ -39,8 +39,24 @@
                         </div>
                         <div>
                             <!--check-->
-                            <label>Priority</label>
-                            <input type="radio" name="priority" id="high">
+                           <fieldset>
+                            <legend> Priority Status</legend>
+                            
+                           <div>
+                            <input type="radio" name="priority" id="high" name="priority" value="high" checked>
+                             <label for="high">high</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" name="priority" id="medium" name="priority" value="medium" >
+                                 <label for="medium">medum</label>
+                                </div>
+
+                                <div>
+                                    <input type="radio" name="priority" id="low" name="priority" value="low" >
+                                     <label for="low">low</label>
+                                    </div>
+                            </fieldset>
                         </div>
                     <div>
                             <label>Notes</label>
