@@ -126,4 +126,20 @@ button {
     border-radius: 21px;
     border: 1px solid #ccc;
 }
+.hasValidation {
+    display: flex!important;
+}
+
+.validation-error {
+    margin: 0;
+    padding: 3px 2px 2px 10px;
+    color: red;
+    font-size: 0.75em;
+}
+
+#validation-error-title,
+#validation-error-description,
+#validation-error-dueDate {
+    display: none;
+}
 

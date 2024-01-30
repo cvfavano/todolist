@@ -29,16 +29,17 @@
                                 <button class="close-button toggle"> <i class="fa-solid fa-xmark"></i></button>
                             </div>
                             <div class="form-pair">
-                                <label>Title</label>
+                                <label class="hasValidation">Title<span id="validation-error-title" class="validation-error">Please enter info</span>
+                                </label>
                                 <input type="text" name="title" id="title">
                             </div>
                         <div class="form-pair">
-                            <label>Description</label>
+                            <label class="hasValidation">Description<span id="validation-error-description" class="validation-error">Please enter info</span></label>
                             <input type="text" name="description" id="description">
                         </div>
                         <div class="form-pair">
                             <!--check-->
-                            <label>Due Date</label>
+                            <label class="hasValidation">Due Date<span id="validation-error-dueDate" class="validation-error">Please enter info</span></label>
                             <input type="date" name="dueDate" id="dueDate">
                         </div>
                         <div class="form-pair">
@@ -73,7 +74,7 @@
                             5) notes
                             6) checklist
                          -->
-                            <button class="toggle submit">Let's go 	<i class="fa-solid fa-circle-arrow-right"></i> </button>
+                            <button class=" submit">Let's go 	<i class="fa-solid fa-circle-arrow-right"></i> </button>
                         </div>
                     </div>
                 </div>
