@@ -1,25 +1,53 @@
-const storageModel = (() => {
-
-    let toDoList = () => {
-        if(typeof(Storage) !== 'undefined') {
+let storageModel = (() => {
+    let data = localStorage;
+    
+   // let toDoList = () => {
+     //   if(typeof(Storage) !== 'undefined') {
             //run program
             //console.log('let\'s go');
-        }
-        else {
-            console.log('something went wrong');
-        }
-    
-        var data = localStorage;
-    
-        data.setItem('greeting', 'hello');
-        //console.log(data.greeting);
+       //     data = localStorage;
+       // }
+       // else {
+         //   console.log('something went wrong');
+       // }
+   // }
+   let createToDo = (arr) => { 
+        saveItem({
+            title: arr[0],
+            description: arr[1],
+            dueDate: arr[2],
+            notes: arr[3],
+            priority: arr[4],
+        }) ;
     }
+    
+    function saveItem(item) {
+        let id = crypto.randomUUID();
+        
+        data.setItem(`'${id}'`, JSON.stringify(
+            item
+        ));
+       // console.log(JSON.parse(data))
+    }
+    //data.setItem('greeting', 'hello');
+        //console.log(data.greeting);
+    //        removeItem() : Remove an item from localStorage. clear() : Clear all data from localStorage.
+
+        // Object example
+
+    
+ 
+
+
+    console.log(localStorage.getItem(localStorage.key('6161fac8-37e3-4e45-b01c-3eba7bba9802')));
 
     return {
-        toDoList
+    //    toDoList,
+       // saveItem,
+        createToDo
     }
 
-})() // storageModel() => toDoList
+})() // storageModel() => toDoList, saveItem, createToDo
 
 
 
@@ -37,11 +65,18 @@ const storageModel = (() => {
 
 //create an onclick event for add item
 
-var displayController =  (() => {
+let displayController =  (() => {
 
     let formContainer;
     let toggleButton = document.querySelectorAll('.toggle');
     let submitButton = document.querySelector('.submit');
+//maybe a factory function here 
+/*    function createToDoItem (name) {
+        const name = name;
+        let showError = false;
+        return {name, showError}
+    }
+*/
 
     function getModalState(element) {
             if (element == 'block') 
@@ -54,17 +89,20 @@ var displayController =  (() => {
         let isDisplay = getModalState(displayType);
     
         if(!isDisplay ) 
-        element.style.display = 'block';    
+            element.style.display = 'block';    
     
         else 
-        element.style.display = 'none'; 
+            element.style.display = 'none'; 
     }
+
     function displayError(element){
         document.getElementById(`validation-error-${element}`).style.display = 'block';
     }
+
     function hideError(element){
         document.getElementById(`validation-error-${element}`).style.display = 'none';
     }
+
     function hideAllErrorValidation() {
           //maybe foreach through the array
         document.getElementById('validation-error-title').style.display = 'none';
@@ -72,27 +110,49 @@ var displayController =  (() => {
         document.getElementById('validation-error-dueDate').style.display = 'none';
     }
 
-    let allFormInput = ['title','description', 'dueDate', 'notes'];
-    function clearAllInputValues(formElements){
+    let allFormInput = ['title','description', 'dueDate',  'notes', 'priority'];
+    
+    function clearAllInputValues(){
 
-        formElements.forEach(element => {
+        allFormInput.forEach(element => {
+            if(element != 'priority')
             document.getElementById(element).value = '';
+
+            else {
+               document.getElementsByName('priority')[0].value = 'checked';
+            }
         })
     }
+    function getFormValues() {
+         values = [];
+       
+        allFormInput.forEach((element) => {
+            if(element != 'priority')
+                values.push(document.getElementById(element).value);
+            
+
+            else {
+                let priority =  document.getElementsByName('priority'); //nodelist
+                for(var i = 0; i < priority.length; i ++) {
+                    if(priority[i].checked) 
+                        values.push(priority[i].value); 
+                }
+            }
+       
+            return values;
+        })
+    }
+    
     function checkValue(element) {
        
         let currentElement = document.querySelector(`#${element}`);
 
-        if(currentElement.value == "") {
+        if(currentElement.value == "") 
             //display validation
             return false;
-        }
 
-        else {
+        else 
             return true;
-            
-            
-        }
     }
 
     function validateForm() {
@@ -122,15 +182,12 @@ var displayController =  (() => {
         if (titleCheck && descCheck && dateCheck) {
             hideAllErrorValidation();
 
-            clearAllInputValues(allFormInput);
-
             let isDisplayType = window.getComputedStyle(formContainer).display;
             toggle(formContainer, isDisplayType);
-
         }
-
     }
-
+   
+   
     toggleButton.forEach((button) => button.addEventListener('click', () => {
 
         formContainer = document.getElementById('add-item');
@@ -143,14 +200,20 @@ var displayController =  (() => {
         //check values for empties
 
         validateForm();
-       
+        getFormValues()
+        storageModel.createToDo(values);
+        
+
+
+        clearAllInputValues();
+        values = [];
         // get item and sent to storage
     });
       
     return {
-     
+
     }
 })(); //displayController() => 
 
 
-storageModel.toDoList();
+//storageModel.toDoList();

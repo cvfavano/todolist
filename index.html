@@ -29,17 +29,17 @@
                                 <button class="close-button toggle"> <i class="fa-solid fa-xmark"></i></button>
                             </div>
                             <div class="form-pair">
-                                <label class="hasValidation">Title<span id="validation-error-title" class="validation-error">Please enter info</span>
-                                </label>
-                                <input type="text" name="title" id="title">
+                                <label class="hasValidation" for="title">Title<span id="validation-error-title" class="validation-error">Please enter info</span>
+                               </label>
+                                 <input type="text" name="title" id="title">
                             </div>
                         <div class="form-pair">
-                            <label class="hasValidation">Description<span id="validation-error-description" class="validation-error">Please enter info</span></label>
+                            <label class="hasValidation" for="description">Description<span id="validation-error-description" class="validation-error">Please enter info</span></label>
                             <input type="text" name="description" id="description">
                         </div>
                         <div class="form-pair">
                             <!--check-->
-                            <label class="hasValidation">Due Date<span id="validation-error-dueDate" class="validation-error">Please enter info</span></label>
+                            <label class="hasValidation" for="dueDate">Due Date<span id="validation-error-dueDate" class="validation-error">Please enter info</span></label>
                             <input type="date" name="dueDate" id="dueDate">
                         </div>
                         <div class="form-pair">
@@ -48,23 +48,23 @@
                             <legend> Priority Status</legend>
                             
                            <div class="form-pair">
-                            <input type="radio" name="priority" id="high" name="priority" value="high" checked>
+                            <input type="radio" name="priority" id="high" name="priority" value="1" checked>
                              <label for="high">high</label>
                             </div>
 
                             <div>
-                                <input type="radio" name="priority" id="medium" name="priority" value="medium" >
+                                <input type="radio" name="priority" id="medium" name="priority" value="2" >
                                  <label for="medium">medum</label>
                                 </div>
 
                                 <div>
-                                    <input type="radio" name="priority" id="low" name="priority" value="low" >
+                                    <input type="radio" name="priority" id="low" name="priority" value="3" >
                                      <label for="low">low</label>
                                     </div>
                             </fieldset>
                         </div>
                     <div  class="form-pair">
-                            <label>Notes</label>
+                            <label for="notes">Notes</label>
                             <input type="text" name="notes" id="notes">
                         </div>
                          <!---   1) title
@@ -74,7 +74,7 @@
                             5) notes
                             6) checklist
                          -->
-                            <button class=" submit">Let's go 	<i class="fa-solid fa-circle-arrow-right"></i> </button>
+                            <button class=" submit">Let's go<i class="fa-solid fa-circle-arrow-right"></i> </button>
                         </div>
                     </div>
                 </div>
