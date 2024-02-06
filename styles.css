@@ -71,7 +71,7 @@ body {
     border-radius: 4px;
 }
 
-.form-modal > .container > div.form-pair {
+.form-modal > .container >  div.form-pair {
    grid-template-columns: 100%;
    margin-bottom: 10px;
 }
@@ -81,7 +81,7 @@ body {
     align-items: center;
 }
 
-.form-modal > .container > div.form-header > p {
+.form-modal > .container > div.form-header  > p {
     font-weight: bold;
     font-size: 1.2em;
 }

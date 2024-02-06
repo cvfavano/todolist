@@ -1,3 +1,5 @@
+
+
 let storageModel = (() => {
     let data = localStorage;
     
@@ -11,13 +13,14 @@ let storageModel = (() => {
          //   console.log('something went wrong');
        // }
    // }
-   let createToDo = (arr) => { 
+   let createToDo = (name, desc, date, priorityLevel, isDone, note) => { 
         saveItem({
-            title: arr[0],
-            description: arr[1],
-            dueDate: arr[2],
-            notes: arr[3],
-            priority: arr[4],
+            title: name,
+            description: desc,
+            dueDate: date,
+            notes: note,
+            priority: priorityLevel,
+            completed: isDone
         }) ;
     }
     
@@ -35,7 +38,10 @@ let storageModel = (() => {
 
         // Object example
 
-    
+    let allToDos = () => {
+        console.log(localStorage)
+        return localStorage;
+    }
  
 
 
@@ -44,7 +50,8 @@ let storageModel = (() => {
     return {
     //    toDoList,
        // saveItem,
-        createToDo
+        createToDo,
+        allToDos
     }
 
 })() // storageModel() => toDoList, saveItem, createToDo
@@ -69,7 +76,8 @@ let displayController =  (() => {
 
     let formContainer;
     let toggleButton = document.querySelectorAll('.toggle');
-    let submitButton = document.querySelector('.submit');
+    let submit = document.querySelector('.submit');
+   //let todoForm = document.
 //maybe a factory function here 
 /*    function createToDoItem (name) {
         const name = name;
@@ -124,23 +132,14 @@ let displayController =  (() => {
         })
     }
     function getFormValues() {
-         values = [];
        
-        allFormInput.forEach((element) => {
-            if(element != 'priority')
-                values.push(document.getElementById(element).value);
-            
-
-            else {
-                let priority =  document.getElementsByName('priority'); //nodelist
-                for(var i = 0; i < priority.length; i ++) {
-                    if(priority[i].checked) 
-                        values.push(priority[i].value); 
-                }
-            }
+        const title = document.getElementById('title').value;
+        const desc = document.getElementById('description').value;
+        const date = document.getElementById('dueDate').value;
+        const note = document.getElementById('notes').value;
+        const priority = document.getElementsByName('priority').checked.value;
        
-            return values;
-        })
+        storageModel.createToDo(title,desc,date,priority,note,false); 
     }
     
     function checkValue(element) {
@@ -187,7 +186,12 @@ let displayController =  (() => {
         }
     }
    
-   
+   function displayAllToDos() {
+    let data = storageModel.allToDos();
+    console.log(data)
+    let container = document.getElementById('container');
+   }
+
     toggleButton.forEach((button) => button.addEventListener('click', () => {
 
         formContainer = document.getElementById('add-item');
@@ -196,17 +200,13 @@ let displayController =  (() => {
    
     }));
     
-    submitButton.addEventListener('click', () => {
-        //check values for empties
-
+    submit.addEventListener('click', () => {
+       
         validateForm();
         getFormValues()
-        storageModel.createToDo(values);
-        
-
 
         clearAllInputValues();
-        values = [];
+        displayAllToDos();
         // get item and sent to storage
     });
       
