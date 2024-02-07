@@ -1,14 +1,16 @@
+//const { parseJSON } = require("date-fns");
+
 let storageModel = (() => {
     let data = localStorage;
     
-   let createToDo = (name, desc, date, priorityLevel, isDone, note) => { 
+    let createToDo = (name, desc, date, priorityLevel, isDone, note) => { 
         saveItem({
             title: name,
             description: desc,
-            dueDate: date,
-            notes: note,
+            dueDate: date,         
             priority: priorityLevel,
-            completed: isDone
+            completed: isDone,
+            notes: note
         }) ;
     }
     
@@ -20,22 +22,52 @@ let storageModel = (() => {
         ));
        // console.log(JSON.parse(data))
     }
-    //data.setItem('greeting', 'hello');
-        //console.log(data.greeting);
-    //        removeItem() : Remove an item from localStorage. clear() : Clear all data from localStorage.
-
-        // Object example
-
+ 
     let allToDos = () => {
-        console.log(localStorage)
-        return localStorage;
+   
+        let data = {};
+        let allData = [];
+        for(let i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i);
+            let item = JSON.parse( localStorage.getItem(key) );
+         
+            allData.push(data[key] = item)
+            
+        }
+        
+        
+    
+        return allData;
     }
 
+    //filtered todos
+
+    let activeToDo = () => {
+        let data = allToDos();
+        
+       console.log(data)
+
+        
+        function filterByActiveStatus(item) {
+           // console.log(item.completed)
+            if (!item.completed )
+                return true
+
+            else return false
+        }
+
+        const allActiveArray =  data.filter(filterByActiveStatus);
+
+        console.log(allActiveArray);
+        return allActiveArray;
+    }
+ 
     return {
     //    toDoList,
        // saveItem,
         createToDo,
-        allToDos
+        allToDos,
+        activeToDo
     }
 
 })() // storageModel() => toDoList, saveItem, createToDo
@@ -110,7 +142,7 @@ let displayController =  (() => {
         const date = document.getElementById('dueDate').value;
         const note = document.getElementById('notes').value;
         const priority = document.querySelector('input[name=priority]:checked').value;
-        storageModel.createToDo(title,desc,date,priority,note,false); 
+        storageModel.createToDo(title,desc,date,priority,false,note); 
     }
     
     function checkValue(element) {
@@ -134,12 +166,15 @@ let displayController =  (() => {
 
         if(!titleCheck ) {
             displayError('title');
+           // return false;
         }
         if(!descCheck ) {
             displayError('description');
+           // return false;
         }
         if(!dateCheck ) {
             displayError('dueDate');
+           // return false;
         }
         if(titleCheck)
             hideError('title');
@@ -150,15 +185,72 @@ let displayController =  (() => {
             hideError('dueDate')
 
         if (titleCheck && descCheck && dateCheck) {
+            
             hideAllErrorValidation();
 
             let isDisplayType = window.getComputedStyle(formContainer).display;
             toggle(formContainer, isDisplayType);
+            return true;
         }
+        return false;
     }
    
-   function displayAllToDos() {
-    let data = storageModel.allToDos();
+   let displayAllActiveToDos = () => {
+        let activeItems = storageModel.activeToDo();
+   
+
+        activeItems.forEach((item) => {
+            const mainDiv = document.querySelector('.main');
+            const newDiv = document.createElement('div');
+           newDiv.className = 'todo-item';
+            mainDiv.append(newDiv);
+
+            const newtext = document.createTextNode(`${item.title}`);
+            const header = document.createElement("h1");
+            header.append(newtext);
+            newDiv.append(header)
+
+            const desc = document.createTextNode(`${item.description}`);
+            const descElement = document.createElement("p");
+
+            descElement.append(desc);
+            newDiv.append(descElement);
+
+            const dueDate = document.createTextNode(`Due: ${item.dueDate}`);
+            const dateElement = document.createElement("p");
+            
+            dateElement.append(dueDate);
+            newDiv.append(dateElement);
+
+            let priorityText ;
+            switch(item.priority) {
+            case '1': priorityText = 'High'; break;
+            case '2': priorityText = 'Medium'; break;
+            default: priorityText = 'Low'; break;
+            }
+            const priority = document.createTextNode(`Priority: ${priorityText}`);
+            const priorityElement = document.createElement("p");
+            
+            priorityElement.append(priority);
+            newDiv.append(priorityElement);
+
+            let flagText;
+            if(item.completed) {
+                flagText = "Done!"
+                
+            }
+            else flagText = 'WIP';
+
+
+            const completionStatus = document.createTextNode(`${flagText}`);
+            const completedElement = document.createElement("p");
+            const completedDiv = document.createElement('div');
+            completedElement.append(completionStatus);
+            newDiv.append(completedDiv);
+            completedDiv.append(completedElement);
+            completedDiv.className = 'flag';
+        //    paragraph.className = 'child-item'
+        })
    }
 
     toggleButton.forEach((button) => button.addEventListener('click', () => {
@@ -170,18 +262,27 @@ let displayController =  (() => {
     
     submit.addEventListener('click', () => {
        
-        validateForm();
-        getFormValues()
+        let isValid = validateForm(); 
+        //is subimtting with errors
+        if(isValid) {
+            getFormValues();
 
-        clearAllInputValues();
-        displayAllToDos();
-        // get item and sent to storage
+            clearAllInputValues();
+            document.querySelectorAll(".todo-item").forEach(el => el.remove());
+            displayAllActiveToDos();
+        }
     });
       
     return {
-
+        displayAllActiveToDos
     }
 })(); //displayController() => 
 
 
-//storageModel.toDoList();
+let helperFunctions = () => ({
+
+
+})()
+   displayController.displayAllActiveToDos();
+
+
