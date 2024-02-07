@@ -74,20 +74,6 @@ let storageModel = (() => {
 
 
 
-//map
-//const obj = {'x': 1, 'y': 2, 'z':3};
-//const result = Object.entries(obj).map(entry => `${entry[0]} ${entry[1]}`);
-//(3) ["x 1", "y 2", "z 3"]
-
-//
-
-
-//gui object --> stringify KVP --> toJSON and make in to and object
-
-//unstringofy directly back to object
-
-//create an onclick event for add item
-
 let displayController =  (() => {
 
     let formContainer;
