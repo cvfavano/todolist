@@ -202,21 +202,40 @@ let displayController =  (() => {
             descElement.append(desc);
             newDiv.append(descElement);
 
-            const dueDate = document.createTextNode(`Due: ${item.dueDate}`);
+            const dueDate = document.createTextNode(`${item.dueDate}`);
+            const dueIcon = document.createElement('i');
+            dueIcon.className = "fa-solid fa-calendar-days";
             const dateElement = document.createElement("p");
             
+            dateElement.append(dueIcon);
             dateElement.append(dueDate);
             newDiv.append(dateElement);
 
-            let priorityText ;
+            let priorityText;
+            let iconImage;
             switch(item.priority) {
-            case '1': priorityText = 'High'; break;
-            case '2': priorityText = 'Medium'; break;
-            default: priorityText = 'Low'; break;
+                case '1': 
+                    priorityText = 'High'; 
+                    iconImage = "fa-solid fa-angles-up"
+                    break;
+                
+                    case '2': 
+                    priorityText = 'Medium'; 
+                    iconImage = "fa-solid fa-angle-up"
+                    break;
+                
+                default: 
+                    priorityText = 'Low'; 
+                    iconImage = "fa-solid fa-angle-down"
+                    break;
             }
-            const priority = document.createTextNode(`Priority: ${priorityText}`);
+//<i class="fa-solid fa-angles-up"></i>
+            const priority = document.createTextNode(`${priorityText} Priority`);
+            const priorityIcon = document.createElement('i');
+            priorityIcon.className = iconImage;
             const priorityElement = document.createElement("p");
             
+            priorityElement.append(priorityIcon);
             priorityElement.append(priority);
             newDiv.append(priorityElement);
 

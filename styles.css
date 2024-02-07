@@ -35,12 +35,14 @@ body {
 }
 
 .add-item {
-    padding: 5px 15px;
-    height: 30px;
+    padding: 10px 15px;
+    height: 40px;
     border-radius: 21px;
-    border-color: #000;
+    border-color: #fff;
     border-style: none;
     border: 1px solid #ccc;
+    background: #0E5012;
+    color: #fff;
 }
 
 .push {
@@ -106,7 +108,10 @@ body {
 }
 
 button {
+    padding: 10px;
     font-size: 0.95em;
+    background: #0E5012;
+    color: #fff;
 }
 
 .close-button {
@@ -162,6 +167,8 @@ button {
 .todo-item h1 {
     font-size: 1.2em;
     font-weight: normal;
+    color: #0E5012;
+    font-weight: bold;
 }
 
 .flag {
@@ -172,13 +179,38 @@ button {
     border: 1px solid #ccc;
     border-top: none;
     box-shadow: 1px 1px 1px #333;
+    background-color:#0E5012 ;
+    color: #fff;
 
 }
-.flag:hover,
-.flag.not-read:hover {
+.flag:hover {
     background: #ddd;
+    color: #000;
  
 }
  .flag p:first-child{
     font-size: 0.7em;
+}
+
+
+
+
+p {
+    font-family: 'Istok Web', sans-serif;
+    
+}
+
+.fa-calendar-days,
+.fa-angles-up,
+.fa-angle-up,
+.fa-angle-down {
+    background:  #0E5012;
+    color: #fff;
+    padding: 9px;
+    border-radius: 50%;
+    margin-right: 10px;;
+    color: #fff;
+    padding: 9px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
