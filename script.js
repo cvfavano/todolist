@@ -1,7 +1,7 @@
 //const { parseJSON } = require("date-fns");
 
 let storageModel = (() => {
-    let data = localStorage;
+    let data = sessionStorage;
     
     let createToDo = (name, desc, date, priorityLevel, isDone, note) => { 
         saveItem({
@@ -27,9 +27,9 @@ let storageModel = (() => {
    
         let data = {};
         let allData = [];
-        for(let i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i);
-            let item = JSON.parse( localStorage.getItem(key) );
+        for(let i = 0; i < sessionStorage.length; i++) {
+            let key = sessionStorage.key(i);
+            let item = JSON.parse( sessionStorage.getItem(key) );
          
             allData.push(data[key] = item)
             
