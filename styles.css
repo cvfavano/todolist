@@ -153,15 +153,24 @@ button {
 }
 
 .main {
-    max-width: 75%;
+    max-width: 90%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .todo-item {
-    position: relative;
-    padding: 15px;
-    margin: 15px;
+    display: flex;
+    width: 33%;
+    max-width: 300px;
+    padding: 0 0 0 15px;
+    margin: 15px 15px 0 0 ;
     border : 1px solid #ccc;
     border-radius: 5px;
+}
+
+.todo-item > .container {
+    width: 83%;
+    margin : 0 5px 0 0;
 }
 
 .todo-item h1 {
@@ -172,14 +181,14 @@ button {
 }
 
 .flag {
-    position: absolute;
+ /*   position: absolute;
     right: 12px;
     top: 0;
     padding: 8px 3px;
-    border: 1px solid #ccc;
+    border: 1px solid #ccc;*/
     border-top: none;
-    box-shadow: 1px 1px 1px #333;
-    background-color:#0E5012 ;
+   /* box-shadow: 1px 1px 1px #333;*/
+    background-color: #5DBD63 ;
     color: #fff;
 
 }
@@ -190,14 +199,42 @@ button {
 }
  .flag p:first-child{
     font-size: 0.7em;
+    background: none!important;
 }
 
 
 
 
-p {
+.todo-item p {
     font-family: 'Istok Web', sans-serif;
+    font-size: 0.95em;
+    margin: 0;
+    /* display: block; */
+    height: 100%;
     
+}
+.side p:first-child{
+    background: #0E5012;
+  
+}
+
+.side .fa-calendar-days {
+background: #2D8633;
+    margin-bottom: 7px;
+}
+
+.side p:nth-child(2){
+    background: #2D8633;
+}
+
+.flag > p {
+    background: none;
+}
+
+.side p {
+    padding: 10px 0;
+    line-height: 1.25;
+    color: #fff;
 }
 
 .fa-calendar-days,
@@ -208,9 +245,34 @@ p {
     color: #fff;
     padding: 9px;
     border-radius: 50%;
-    margin-right: 10px;;
     color: #fff;
     padding: 9px;
     border-radius: 50%;
-    margin-right: 10px;
+}
+
+
+.side {
+    display: flex;
+    flex-direction: column;
+    width: 17%;
+
+    font-size: .75em;
+    justify-content: center;
+    text-align: center;
+}
+
+.side i {
+    margin-bottom: 7px;
+}
+
+.side .flag p:nth-child(2) {
+    background: none;
+}
+
+.fa-clock {
+    background: #2D8633;
+    padding: 6px;
+    border-radius: 29%;
+    margin-top: 6px;
+
 }

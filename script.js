@@ -21,21 +21,23 @@ let storageModel = (() => {
             item
         ));
        // console.log(JSON.parse(data))
+       console.log(data)
     }
  
     let allToDos = () => {
    
-        let data = {};
+        let dataObj = {};
         let allData = [];
-        for(let i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i);
-            let item = JSON.parse( localStorage.getItem(key) );
+        for(let i = 0; i < data.length; i++) {
+            let key = data.key(i);
+            let item = JSON.parse( data.getItem(key) );
          
-            allData.push(data[key] = item)
+            allData.push(dataObj[key] = item)
             
         }
         
-        
+        console.log(dataObj)
+        console.log(allData)
     
         return allData;
     }
@@ -188,19 +190,27 @@ let displayController =  (() => {
         activeItems.forEach((item) => {
             const mainDiv = document.querySelector('.main');
             const newDiv = document.createElement('div');
-           newDiv.className = 'todo-item';
+            newDiv.className = 'todo-item';
             mainDiv.append(newDiv);
+
+            const container = document.createElement('div');
+            container.className = 'container';
+            newDiv.append(container);
+
+            const sidebar = document.createElement('div');
+            sidebar.className = 'side';
+            newDiv.append(sidebar);
 
             const newtext = document.createTextNode(`${item.title}`);
             const header = document.createElement("h1");
             header.append(newtext);
-            newDiv.append(header)
+            container.append(header)
 
             const desc = document.createTextNode(`${item.description}`);
             const descElement = document.createElement("p");
 
             descElement.append(desc);
-            newDiv.append(descElement);
+            container.append(descElement);
 
             const dueDate = document.createTextNode(`${item.dueDate}`);
             const dueIcon = document.createElement('i');
@@ -209,10 +219,11 @@ let displayController =  (() => {
             
             dateElement.append(dueIcon);
             dateElement.append(dueDate);
-            newDiv.append(dateElement);
+            sidebar.append(dateElement);
 
             let priorityText;
             let iconImage;
+
             switch(item.priority) {
                 case '1': 
                     priorityText = 'High'; 
@@ -229,7 +240,7 @@ let displayController =  (() => {
                     iconImage = "fa-solid fa-angle-down"
                     break;
             }
-//<i class="fa-solid fa-angles-up"></i>
+
             const priority = document.createTextNode(`${priorityText} Priority`);
             const priorityIcon = document.createElement('i');
             priorityIcon.className = iconImage;
@@ -237,24 +248,33 @@ let displayController =  (() => {
             
             priorityElement.append(priorityIcon);
             priorityElement.append(priority);
-            newDiv.append(priorityElement);
+            sidebar.append(priorityElement);
 
             let flagText;
+            let iconStatus;
+
             if(item.completed) {
-                flagText = "Done!"
-                
+                flagText = "Completed";
+                iconStatus = "fa-regular fa-check";
             }
-            else flagText = 'WIP';
+            else {
+                flagText = 'WIP';
+                iconStatus = "fa-solid fa-clock";
+            }
+
+            const completedIcon = document.createElement('i');
+            completedIcon.className = iconStatus;
 
 
             const completionStatus = document.createTextNode(`${flagText}`);
             const completedElement = document.createElement("p");
             const completedDiv = document.createElement('div');
             completedElement.append(completionStatus);
-            newDiv.append(completedDiv);
+            completedDiv.append(completedIcon);
             completedDiv.append(completedElement);
             completedDiv.className = 'flag';
-        //    paragraph.className = 'child-item'
+            
+            sidebar.append(completedDiv);
         })
    }
 
