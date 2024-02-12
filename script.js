@@ -198,7 +198,6 @@ let displayController =  (() => {
             const newLink = document.createElement('button');
             const expandIcon = document.createElement('i');
             expandIcon.className = "fa-solid fa-expand";
-            newLink.append(document.createTextNode('x'));
 
             const container = document.createElement('div');
             container.className = 'container';
@@ -211,14 +210,22 @@ let displayController =  (() => {
                 console.log(item.key);
                 console.log(item);
                 const todoModal = document.querySelector("#to-do.form-modal");
+
+
                 const todoModalContainer = document.querySelector("#to-do.form-modal .container");
+
+            //   console.log( todoModalContainer.value);
                 todoModal.style.display = 'block';
 
-                const modalDiv = document.createElement('div');
-                todoModalContainer.append(modalDiv);
+                while(todoModalContainer.firstChild) {
+                    todoModalContainer.removeChild(todoModalContainer.firstChild);
+                }
+            
+        //        const modalDiv = document.createElement('div');
+             //   todoModalContainer.append(modalDiv);
                 const modalTextTitle = document.createTextNode(item.title);
-                const ModalH1 = document.createElement('p');
-                modalDiv.append(ModalH1);
+                const ModalH1 = document.createElement('h1');
+                todoModalContainer.append(ModalH1);
                 ModalH1.append(modalTextTitle);
 
                 const modalDescription = document.createElement('p');
@@ -236,9 +243,32 @@ let displayController =  (() => {
                 const modalNotes = document.createElement('p');
                 modalNotes.append(document.createTextNode(item.notes));
 
-                modalDiv.append(modalDescription,modalDate, modalPriority, modalStatus, modalNotes);
+                todoModalContainer.append(modalDescription,modalDate, modalPriority, modalStatus, modalNotes);
 
-            })
+                const modalExit = document.createElement('button');
+                modalExit.className = 'exit push toggle close-button';
+
+
+                const modalEdit = document.createElement('button');
+                modalEdit.className = 'edit push toggle';
+                const modalDelete = document.createElement('button');
+                modalDelete.className = 'delete push toggle';
+                todoModalContainer.append(modalEdit,modalExit,modalDelete)
+
+               const exitText = document.createTextNode('x');
+               const editText = document.createTextNode('edit');
+               const deleteText = document.createTextNode('delete');
+               modalDelete.append(deleteText);
+               modalExit.append(exitText);
+               modalEdit.append(editText);
+
+               modalExit.addEventListener('click', () => {
+                    formContainer = document.querySelector('#to-do.form-modal');
+                    
+                    formContainer.style.display = 'none';
+               });
+
+            }, true);
 
             const sidebar = document.createElement('div');
             sidebar.className = 'side';
@@ -354,5 +384,3 @@ let helperFunctions = () => ({
 
 })()
    displayController.displayAllActiveToDos();
-
-

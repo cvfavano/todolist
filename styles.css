@@ -125,6 +125,15 @@ button {
 
 }
 
+#to-do .container {
+    position:relative;
+}
+.exit {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
 .submit {
     justify-self: center;
     padding: 10px 15px;
