@@ -171,7 +171,8 @@ button {
 }
 
 .todo-item > .container {
-  
+    width: 100%;
+    position: relative;
     margin : 0 15px;
 }
 
@@ -275,10 +276,22 @@ background: #2D8633;
     background: none;
 }
 
+.side > p:nth-child(3) {
+    background: #5DBD63;
+    padding-bottom: 5px;
+}
+
 .fa-clock {
     background: #2D8633;
     padding: 6px;
     border-radius: 29%;
-    margin-top: 6px;
+    margin-top: 2px;
 
+}
+
+.fa-expand {
+    position: absolute;
+    right: 0px;
+    top: 18px;
+    color: #5DBD63;
 }

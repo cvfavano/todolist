@@ -30,7 +30,9 @@ let storageModel = (() => {
         let allData = [];
         for(let i = 0; i < data.length; i++) {
             let key = data.key(i);
+           
             let item = JSON.parse( data.getItem(key) );
+            item['key'] = key.replace(/["']/g, "");
          
             allData.push(dataObj[key] = item)
             
@@ -192,10 +194,14 @@ let displayController =  (() => {
             const newDiv = document.createElement('div');
             newDiv.className = 'todo-item';
             mainDiv.append(newDiv);
+            
+            const expandIcon = document.createElement('i');
+            expandIcon.className = "fa-solid fa-expand";
 
             const container = document.createElement('div');
             container.className = 'container';
             newDiv.append(container);
+            container.append(expandIcon);
 
             const sidebar = document.createElement('div');
             sidebar.className = 'side';
@@ -204,6 +210,7 @@ let displayController =  (() => {
             const newtext = document.createTextNode(`${item.title}`);
             const header = document.createElement("h1");
             header.append(newtext);
+            header.setAttribute('key', item.key);
             container.append(header)
 
             const desc = document.createTextNode(`${item.description}`);
