@@ -195,13 +195,17 @@ let displayController =  (() => {
             newDiv.className = 'todo-item';
             mainDiv.append(newDiv);
             
+            const newLink = document.createElement('button');
             const expandIcon = document.createElement('i');
             expandIcon.className = "fa-solid fa-expand";
+
 
             const container = document.createElement('div');
             container.className = 'container';
             newDiv.append(container);
-            container.append(expandIcon);
+            container.append(newLink);
+            newLink.append(expandIcon);
+            newLink.className = 'expand';
 
             const sidebar = document.createElement('div');
             sidebar.className = 'side';
