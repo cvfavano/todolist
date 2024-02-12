@@ -198,7 +198,7 @@ let displayController =  (() => {
             const newLink = document.createElement('button');
             const expandIcon = document.createElement('i');
             expandIcon.className = "fa-solid fa-expand";
-
+            newLink.append(document.createTextNode('x'));
 
             const container = document.createElement('div');
             container.className = 'container';
@@ -206,6 +206,39 @@ let displayController =  (() => {
             container.append(newLink);
             newLink.append(expandIcon);
             newLink.className = 'expand';
+
+            newLink.addEventListener('click', () => {
+                console.log(item.key);
+                console.log(item);
+                const todoModal = document.querySelector("#to-do.form-modal");
+                const todoModalContainer = document.querySelector("#to-do.form-modal .container");
+                todoModal.style.display = 'block';
+
+                const modalDiv = document.createElement('div');
+                todoModalContainer.append(modalDiv);
+                const modalTextTitle = document.createTextNode(item.title);
+                const ModalH1 = document.createElement('p');
+                modalDiv.append(ModalH1);
+                ModalH1.append(modalTextTitle);
+
+                const modalDescription = document.createElement('p');
+                modalDescription.append(document.createTextNode(item.description));
+
+                const modalDate = document.createElement('p');
+                modalDate.append(document.createTextNode(item.dueDate));
+
+                const modalPriority = document.createElement('p');
+                modalPriority.append(document.createTextNode(item.priority));
+
+                const modalStatus = document.createElement('p');
+                modalStatus.append(document.createTextNode(item.completed));
+
+                const modalNotes = document.createElement('p');
+                modalNotes.append(document.createTextNode(item.notes));
+
+                modalDiv.append(modalDescription,modalDate, modalPriority, modalStatus, modalNotes);
+
+            })
 
             const sidebar = document.createElement('div');
             sidebar.className = 'side';
