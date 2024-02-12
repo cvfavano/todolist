@@ -241,7 +241,7 @@ let displayController =  (() => {
                     break;
             }
 
-            const priority = document.createTextNode(`${priorityText} Priority`);
+            const priority = document.createTextNode(`${priorityText}`);
             const priorityIcon = document.createElement('i');
             priorityIcon.className = iconImage;
             const priorityElement = document.createElement("p");
@@ -268,13 +268,14 @@ let displayController =  (() => {
 
             const completionStatus = document.createTextNode(`${flagText}`);
             const completedElement = document.createElement("p");
-            const completedDiv = document.createElement('div');
-            completedElement.append(completionStatus);
-            completedDiv.append(completedIcon);
-            completedDiv.append(completedElement);
-            completedDiv.className = 'flag';
+         //   const completedDiv = document.createElement('div');
+             completedElement.append(completedIcon);
+              completedElement.append(completionStatus);
+          
+         //   completedElement.append(completedElement);
+        //    completedDiv.className = 'flag';
             
-            sidebar.append(completedDiv);
+            sidebar.append(completedElement);
         })
    }
 

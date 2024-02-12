@@ -121,7 +121,7 @@ button {
     font-weight: bold;
     border: 1px solid #ccc;
     border-radius: 4px;
-    max-height: 25px;
+    max-height: 39px;
 
 }
 
@@ -159,18 +159,20 @@ button {
 }
 
 .todo-item {
+    position: relative;
     display: flex;
     width: 33%;
     max-width: 300px;
-    padding: 0 0 0 15px;
+  /*  padding: 0 0 0 15px; */
     margin: 15px 15px 0 0 ;
-    border : 1px solid #ccc;
+        border : 1px solid #ccc;
     border-radius: 5px;
+    height: 200px;
 }
 
 .todo-item > .container {
-    width: 83%;
-    margin : 0 5px 0 0;
+  
+    margin : 0 15px;
 }
 
 .todo-item h1 {
@@ -180,7 +182,7 @@ button {
     font-weight: bold;
 }
 
-.flag {
+.fa-clock {
  /*   position: absolute;
     right: 12px;
     top: 0;
@@ -193,9 +195,9 @@ button {
 
 }
 .flag:hover {
-    background: #ddd;
+   /* background: #ddd;
     color: #000;
- 
+ */
 }
  .flag p:first-child{
     font-size: 0.7em;
@@ -224,6 +226,7 @@ background: #2D8633;
 }
 
 .side p:nth-child(2){
+    padding: 8px 2px 6px;
     background: #2D8633;
 }
 
@@ -232,9 +235,11 @@ background: #2D8633;
 }
 
 .side p {
-    padding: 10px 0;
+    padding:  7px 2px 0px 2px;
     line-height: 1.25;
     color: #fff;
+    width: 100%;
+    height: 100%;
 }
 
 .fa-calendar-days,
@@ -246,23 +251,24 @@ background: #2D8633;
     padding: 9px;
     border-radius: 50%;
     color: #fff;
-    padding: 9px;
+    padding: 6px;
     border-radius: 50%;
 }
 
 
 .side {
+    position: absolute;
     display: flex;
-    flex-direction: column;
-    width: 17%;
+    width: 100%;
 
     font-size: .75em;
-    justify-content: center;
+ /*   justify-content: center;*/
     text-align: center;
+    bottom: 0;
 }
 
 .side i {
-    margin-bottom: 7px;
+    margin-right: 3px;
 }
 
 .side .flag p:nth-child(2) {
