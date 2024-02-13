@@ -198,6 +198,7 @@ let displayController =  (() => {
             const newLink = document.createElement('button');
             const expandIcon = document.createElement('i');
             expandIcon.className = "fa-solid fa-expand";
+            expandIcon.append(document.createTextNode('x'));
 
             const container = document.createElement('div');
             container.className = 'container';
@@ -226,22 +227,28 @@ let displayController =  (() => {
                 const modalTextTitle = document.createTextNode(item.title);
                 const ModalH1 = document.createElement('h1');
                 todoModalContainer.append(ModalH1);
-                ModalH1.append(modalTextTitle);
+                ModalH1.append(modalTextTitle)
+                ModalH1.setAttribute("contenteditable",true);
 
                 const modalDescription = document.createElement('p');
+                modalDescription.setAttribute("contenteditable",true);
                 modalDescription.append(document.createTextNode(item.description));
 
                 const modalDate = document.createElement('p');
                 modalDate.append(document.createTextNode(item.dueDate));
+                modalDate.setAttribute("contenteditable",true);
 
                 const modalPriority = document.createElement('p');
                 modalPriority.append(document.createTextNode(item.priority));
+                modalPriority.setAttribute("contenteditable",true);
 
                 const modalStatus = document.createElement('p');
                 modalStatus.append(document.createTextNode(item.completed));
+                modalStatus.setAttribute("contenteditable",true);
 
                 const modalNotes = document.createElement('p');
                 modalNotes.append(document.createTextNode(item.notes));
+                modalNotes.setAttribute("contenteditable",true);
 
                 todoModalContainer.append(modalDescription,modalDate, modalPriority, modalStatus, modalNotes);
 
@@ -267,6 +274,18 @@ let displayController =  (() => {
                     
                     formContainer.style.display = 'none';
                });
+               modalEdit.addEventListener('click', () =>{
+                formContainer = document.querySelector('#to-do.form-modal');
+                    
+                    formContainer.style.display = 'none';
+
+                    let editContainer = document.querySelector('#edit-item.form-modal');
+                    editContainer.style.display = 'block';
+                    console.log(item)
+
+                    
+
+               })
 
             }, true);
 
