@@ -198,7 +198,7 @@ let displayController =  (() => {
             const newLink = document.createElement('button');
             const expandIcon = document.createElement('i');
             expandIcon.className = "fa-solid fa-expand";
-            expandIcon.append(document.createTextNode('x'));
+         //   expandIcon.append(document.createTextNode('x'))
 
             const container = document.createElement('div');
             container.className = 'container';
@@ -274,16 +274,13 @@ let displayController =  (() => {
                     
                     formContainer.style.display = 'none';
                });
-               modalEdit.addEventListener('click', () =>{
+               modalEdit.addEventListener('click', (item) =>{
                 formContainer = document.querySelector('#to-do.form-modal');
                     
                     formContainer.style.display = 'none';
 
                     let editContainer = document.querySelector('#edit-item.form-modal');
                     editContainer.style.display = 'block';
-                    console.log(item)
-
-                    
 
                })
 
