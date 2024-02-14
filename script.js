@@ -80,7 +80,7 @@ let storageModel = (() => {
 
 let displayController =  (() => {
 
-    let formContainer;
+   // let formContainer;
     let toggleButton = document.querySelectorAll('.toggle');
     let submit = document.querySelector('.submit');
 
@@ -270,21 +270,22 @@ let displayController =  (() => {
                modalEdit.append(editText);
 
                modalExit.addEventListener('click', () => {
-                    formContainer = document.querySelector('#to-do.form-modal');
+                    let formContainer = document.querySelector('#to-do.form-modal');
                     
                     formContainer.style.display = 'none';
                });
-               modalEdit.addEventListener('click', (item) =>{
-                formContainer = document.querySelector('#to-do.form-modal');
+               modalEdit.addEventListener('click', () =>{
+                let formContainer = document.querySelector('#to-do.form-modal');
                     
                     formContainer.style.display = 'none';
 
-                    let editContainer = document.querySelector('#edit-item.form-modal');
+                    let editContainer = document.getElementById('add-item');
+              
                     editContainer.style.display = 'block';
-
+                    console.log(item);
                })
 
-            }, true);
+            });
 
             const sidebar = document.createElement('div');
             sidebar.className = 'side';
@@ -358,19 +359,15 @@ let displayController =  (() => {
 
             const completionStatus = document.createTextNode(`${flagText}`);
             const completedElement = document.createElement("p");
-         //   const completedDiv = document.createElement('div');
              completedElement.append(completedIcon);
               completedElement.append(completionStatus);
-          
-         //   completedElement.append(completedElement);
-        //    completedDiv.className = 'flag';
             
             sidebar.append(completedElement);
         })
    }
 
     toggleButton.forEach((button) => button.addEventListener('click', () => {
-        formContainer = document.getElementById('add-item');
+        let formContainer = document.getElementById('add-item');
         let isDisplayType = window.getComputedStyle(formContainer).display;
         toggle(formContainer, isDisplayType);
    
