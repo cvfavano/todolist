@@ -184,185 +184,191 @@ let displayController =  (() => {
         }
         return false;
     }
+
+    function createToDo(item) {
+            
+        const mainDiv = document.querySelector('.main');
+        const newDiv = document.createElement('div');
+        newDiv.className = 'todo-item';
+        mainDiv.append(newDiv);
+        
+        const newLink = document.createElement('button');
+        const expandIcon = document.createElement('i');
+        expandIcon.className = "fa-solid fa-expand";
+     //   expandIcon.append(document.createTextNode('x'))
+
+        const container = document.createElement('div');
+        container.className = 'container';
+        newDiv.append(container);
+        container.append(newLink);
+        newLink.append(expandIcon);
+        newLink.className = 'expand';
+
+        newLink.addEventListener('click', () => {
+            console.log(item.key);
+            console.log(item);
+            const todoModal = document.querySelector("#to-do.form-modal");
+
+
+            const todoModalContainer = document.querySelector("#to-do.form-modal .container");
+
+        //   console.log( todoModalContainer.value);
+            todoModal.style.display = 'block';
+
+            while(todoModalContainer.firstChild) {
+                todoModalContainer.removeChild(todoModalContainer.firstChild);
+            }
+        
+    //        const modalDiv = document.createElement('div');
+         //   todoModalContainer.append(modalDiv);
+            const modalTextTitle = document.createTextNode(item.title);
+            const ModalH1 = document.createElement('h1');
+            todoModalContainer.append(ModalH1);
+            ModalH1.append(modalTextTitle)
+            ModalH1.setAttribute("contenteditable",true);
+
+            const modalDescription = document.createElement('p');
+            modalDescription.setAttribute("contenteditable",true);
+            modalDescription.append(document.createTextNode(item.description));
+
+            const modalDate = document.createElement('p');
+            modalDate.append(document.createTextNode(item.dueDate));
+            modalDate.setAttribute("contenteditable",true);
+
+            const modalPriority = document.createElement('p');
+            modalPriority.append(document.createTextNode(item.priority));
+            modalPriority.setAttribute("contenteditable",true);
+
+            const modalStatus = document.createElement('p');
+            modalStatus.append(document.createTextNode(item.completed));
+            modalStatus.setAttribute("contenteditable",true);
+
+            const modalNotes = document.createElement('p');
+            modalNotes.append(document.createTextNode(item.notes));
+            modalNotes.setAttribute("contenteditable",true);
+
+            todoModalContainer.append(modalDescription,modalDate, modalPriority, modalStatus, modalNotes);
+
+            const modalExit = document.createElement('button');
+            modalExit.className = 'exit push toggle close-button';
+
+
+            const modalEdit = document.createElement('button');
+            modalEdit.className = 'edit push toggle';
+            const modalDelete = document.createElement('button');
+            modalDelete.className = 'delete push toggle';
+            todoModalContainer.append(modalEdit,modalExit,modalDelete)
+
+           const exitText = document.createTextNode('x');
+           const editText = document.createTextNode('edit');
+           const deleteText = document.createTextNode('delete');
+           modalDelete.append(deleteText);
+           modalExit.append(exitText);
+           modalEdit.append(editText);
+
+           modalExit.addEventListener('click', () => {
+                let formContainer = document.querySelector('#to-do.form-modal');
+                
+                formContainer.style.display = 'none';
+           });
+           modalEdit.addEventListener('click', () =>{
+            let formContainer = document.querySelector('#to-do.form-modal');
+                
+                formContainer.style.display = 'none';
+
+                let editContainer = document.getElementById('add-item');
+          
+                editContainer.style.display = 'block';
+                console.log(item);
+           })
+
+        });
+
+        const sidebar = document.createElement('div');
+        sidebar.className = 'side';
+        newDiv.append(sidebar);
+
+        const newtext = document.createTextNode(`${item.title}`);
+        const header = document.createElement("h1");
+        header.append(newtext);
+        header.setAttribute('key', item.key);
+        container.append(header)
+
+        const desc = document.createTextNode(`${item.description}`);
+        const descElement = document.createElement("p");
+
+        descElement.append(desc);
+        container.append(descElement);
+
+        const dueDate = document.createTextNode(`${item.dueDate}`);
+        const dueIcon = document.createElement('i');
+        dueIcon.className = "fa-solid fa-calendar-days";
+        const dateElement = document.createElement("p");
+        
+        dateElement.append(dueIcon);
+        dateElement.append(dueDate);
+        sidebar.append(dateElement);
+
+        let priorityText;
+        let iconImage;
+
+        switch(item.priority) {
+            case '1': 
+                priorityText = 'High'; 
+                iconImage = "fa-solid fa-angles-up"
+                break;
+            
+                case '2': 
+                priorityText = 'Medium'; 
+                iconImage = "fa-solid fa-angle-up"
+                break;
+            
+            default: 
+                priorityText = 'Low'; 
+                iconImage = "fa-solid fa-angle-down"
+                break;
+        }
+
+        const priority = document.createTextNode(`${priorityText}`);
+        const priorityIcon = document.createElement('i');
+        priorityIcon.className = iconImage;
+        const priorityElement = document.createElement("p");
+        
+        priorityElement.append(priorityIcon);
+        priorityElement.append(priority);
+        sidebar.append(priorityElement);
+
+        let flagText;
+        let iconStatus;
+
+        if(item.completed) {
+            flagText = "Completed";
+            iconStatus = "fa-regular fa-check";
+        }
+        else {
+            flagText = 'WIP';
+            iconStatus = "fa-solid fa-clock";
+        }
+
+        const completedIcon = document.createElement('i');
+        completedIcon.className = iconStatus;
+
+
+        const completionStatus = document.createTextNode(`${flagText}`);
+        const completedElement = document.createElement("p");
+         completedElement.append(completedIcon);
+          completedElement.append(completionStatus);
+        
+        sidebar.append(completedElement);
+
+    }
    
    let displayAllActiveToDos = () => {
         let activeItems = storageModel.activeToDo();
    
 
         activeItems.forEach((item) => {
-            const mainDiv = document.querySelector('.main');
-            const newDiv = document.createElement('div');
-            newDiv.className = 'todo-item';
-            mainDiv.append(newDiv);
-            
-            const newLink = document.createElement('button');
-            const expandIcon = document.createElement('i');
-            expandIcon.className = "fa-solid fa-expand";
-         //   expandIcon.append(document.createTextNode('x'))
-
-            const container = document.createElement('div');
-            container.className = 'container';
-            newDiv.append(container);
-            container.append(newLink);
-            newLink.append(expandIcon);
-            newLink.className = 'expand';
-
-            newLink.addEventListener('click', () => {
-                console.log(item.key);
-                console.log(item);
-                const todoModal = document.querySelector("#to-do.form-modal");
-
-
-                const todoModalContainer = document.querySelector("#to-do.form-modal .container");
-
-            //   console.log( todoModalContainer.value);
-                todoModal.style.display = 'block';
-
-                while(todoModalContainer.firstChild) {
-                    todoModalContainer.removeChild(todoModalContainer.firstChild);
-                }
-            
-        //        const modalDiv = document.createElement('div');
-             //   todoModalContainer.append(modalDiv);
-                const modalTextTitle = document.createTextNode(item.title);
-                const ModalH1 = document.createElement('h1');
-                todoModalContainer.append(ModalH1);
-                ModalH1.append(modalTextTitle)
-                ModalH1.setAttribute("contenteditable",true);
-
-                const modalDescription = document.createElement('p');
-                modalDescription.setAttribute("contenteditable",true);
-                modalDescription.append(document.createTextNode(item.description));
-
-                const modalDate = document.createElement('p');
-                modalDate.append(document.createTextNode(item.dueDate));
-                modalDate.setAttribute("contenteditable",true);
-
-                const modalPriority = document.createElement('p');
-                modalPriority.append(document.createTextNode(item.priority));
-                modalPriority.setAttribute("contenteditable",true);
-
-                const modalStatus = document.createElement('p');
-                modalStatus.append(document.createTextNode(item.completed));
-                modalStatus.setAttribute("contenteditable",true);
-
-                const modalNotes = document.createElement('p');
-                modalNotes.append(document.createTextNode(item.notes));
-                modalNotes.setAttribute("contenteditable",true);
-
-                todoModalContainer.append(modalDescription,modalDate, modalPriority, modalStatus, modalNotes);
-
-                const modalExit = document.createElement('button');
-                modalExit.className = 'exit push toggle close-button';
-
-
-                const modalEdit = document.createElement('button');
-                modalEdit.className = 'edit push toggle';
-                const modalDelete = document.createElement('button');
-                modalDelete.className = 'delete push toggle';
-                todoModalContainer.append(modalEdit,modalExit,modalDelete)
-
-               const exitText = document.createTextNode('x');
-               const editText = document.createTextNode('edit');
-               const deleteText = document.createTextNode('delete');
-               modalDelete.append(deleteText);
-               modalExit.append(exitText);
-               modalEdit.append(editText);
-
-               modalExit.addEventListener('click', () => {
-                    let formContainer = document.querySelector('#to-do.form-modal');
-                    
-                    formContainer.style.display = 'none';
-               });
-               modalEdit.addEventListener('click', () =>{
-                let formContainer = document.querySelector('#to-do.form-modal');
-                    
-                    formContainer.style.display = 'none';
-
-                    let editContainer = document.getElementById('add-item');
-              
-                    editContainer.style.display = 'block';
-                    console.log(item);
-               })
-
-            });
-
-            const sidebar = document.createElement('div');
-            sidebar.className = 'side';
-            newDiv.append(sidebar);
-
-            const newtext = document.createTextNode(`${item.title}`);
-            const header = document.createElement("h1");
-            header.append(newtext);
-            header.setAttribute('key', item.key);
-            container.append(header)
-
-            const desc = document.createTextNode(`${item.description}`);
-            const descElement = document.createElement("p");
-
-            descElement.append(desc);
-            container.append(descElement);
-
-            const dueDate = document.createTextNode(`${item.dueDate}`);
-            const dueIcon = document.createElement('i');
-            dueIcon.className = "fa-solid fa-calendar-days";
-            const dateElement = document.createElement("p");
-            
-            dateElement.append(dueIcon);
-            dateElement.append(dueDate);
-            sidebar.append(dateElement);
-
-            let priorityText;
-            let iconImage;
-
-            switch(item.priority) {
-                case '1': 
-                    priorityText = 'High'; 
-                    iconImage = "fa-solid fa-angles-up"
-                    break;
-                
-                    case '2': 
-                    priorityText = 'Medium'; 
-                    iconImage = "fa-solid fa-angle-up"
-                    break;
-                
-                default: 
-                    priorityText = 'Low'; 
-                    iconImage = "fa-solid fa-angle-down"
-                    break;
-            }
-
-            const priority = document.createTextNode(`${priorityText}`);
-            const priorityIcon = document.createElement('i');
-            priorityIcon.className = iconImage;
-            const priorityElement = document.createElement("p");
-            
-            priorityElement.append(priorityIcon);
-            priorityElement.append(priority);
-            sidebar.append(priorityElement);
-
-            let flagText;
-            let iconStatus;
-
-            if(item.completed) {
-                flagText = "Completed";
-                iconStatus = "fa-regular fa-check";
-            }
-            else {
-                flagText = 'WIP';
-                iconStatus = "fa-solid fa-clock";
-            }
-
-            const completedIcon = document.createElement('i');
-            completedIcon.className = iconStatus;
-
-
-            const completionStatus = document.createTextNode(`${flagText}`);
-            const completedElement = document.createElement("p");
-             completedElement.append(completedIcon);
-              completedElement.append(completionStatus);
-            
-            sidebar.append(completedElement);
+            createToDo(item);
         })
    }
 
