@@ -80,26 +80,22 @@ let storageModel = (() => {
 
 let displayController =  (() => {
 
-   // let formContainer;
-    let toggleButton = document.querySelectorAll('.toggle');
-    let submit = document.querySelector('.submit');
-
-    function getModalState(element) {
-            if (element == 'block') 
-                return true
+    // function getModalState(element) {
+    //         if (element == 'block') 
+    //             return true
             
-            else return false
-    }
+    //         else return false
+    // }
 
-    function toggle(element, displayType) {
-        let isDisplay = getModalState(displayType);
+    // function toggle(element, displayType) {
+    //     let isDisplay = getModalState(displayType);
     
-        if(!isDisplay ) 
-            element.style.display = 'block';    
+    //     if(!isDisplay ) 
+    //         element.style.display = 'block';    
     
-        else 
-            element.style.display = 'none'; 
-    }
+    //     else 
+    //         element.style.display = 'none'; 
+    // }
 
     function displayError(element){
         document.getElementById(`validation-error-${element}`).style.display = 'block';
@@ -212,40 +208,34 @@ let displayController =  (() => {
 
             const todoModalContainer = document.querySelector("#to-do.form-modal .container");
 
-        //   console.log( todoModalContainer.value);
+//   console.log( todoModalContainer.value);
             todoModal.style.display = 'block';
 
             while(todoModalContainer.firstChild) {
                 todoModalContainer.removeChild(todoModalContainer.firstChild);
             }
         
-    //        const modalDiv = document.createElement('div');
+//        const modalDiv = document.createElement('div');
          //   todoModalContainer.append(modalDiv);
             const modalTextTitle = document.createTextNode(item.title);
             const ModalH1 = document.createElement('h1');
             todoModalContainer.append(ModalH1);
             ModalH1.append(modalTextTitle)
-            ModalH1.setAttribute("contenteditable",true);
 
             const modalDescription = document.createElement('p');
-            modalDescription.setAttribute("contenteditable",true);
             modalDescription.append(document.createTextNode(item.description));
 
             const modalDate = document.createElement('p');
             modalDate.append(document.createTextNode(item.dueDate));
-            modalDate.setAttribute("contenteditable",true);
 
             const modalPriority = document.createElement('p');
             modalPriority.append(document.createTextNode(item.priority));
-            modalPriority.setAttribute("contenteditable",true);
 
             const modalStatus = document.createElement('p');
             modalStatus.append(document.createTextNode(item.completed));
-            modalStatus.setAttribute("contenteditable",true);
 
             const modalNotes = document.createElement('p');
             modalNotes.append(document.createTextNode(item.notes));
-            modalNotes.setAttribute("contenteditable",true);
 
             todoModalContainer.append(modalDescription,modalDate, modalPriority, modalStatus, modalNotes);
 
@@ -271,8 +261,9 @@ let displayController =  (() => {
                 
                 formContainer.style.display = 'none';
            });
-           modalEdit.addEventListener('click', () =>{
-            let formContainer = document.querySelector('#to-do.form-modal');
+
+           modalEdit.addEventListener('click', () => {
+                let formContainer = document.querySelector('#to-do.form-modal');
                 
                 formContainer.style.display = 'none';
 
@@ -356,8 +347,8 @@ let displayController =  (() => {
 
         const completionStatus = document.createTextNode(`${flagText}`);
         const completedElement = document.createElement("p");
-         completedElement.append(completedIcon);
-          completedElement.append(completionStatus);
+        completedElement.append(completedIcon);
+        completedElement.append(completionStatus);
         
         sidebar.append(completedElement);
 
@@ -365,20 +356,38 @@ let displayController =  (() => {
    
    let displayAllActiveToDos = () => {
         let activeItems = storageModel.activeToDo();
-   
+
 
         activeItems.forEach((item) => {
             createToDo(item);
         })
-   }
+    }
 
-    toggleButton.forEach((button) => button.addEventListener('click', () => {
-        let formContainer = document.getElementById('add-item');
-        let isDisplayType = window.getComputedStyle(formContainer).display;
-        toggle(formContainer, isDisplayType);
    
-    }));
+  
+
+        let addButton = document.querySelector('.add-item');
+        addButton.addEventListener('click', () => {
+             let formContainer = document.querySelector('#add-item.form-modal');
+             console.log(formContainer)
+             formContainer.style.display = 'block';
+             
+        })
     
+
+        let exitButton = document.querySelector('.close-button');
+        exitButton.addEventListener('click', () => {
+             let formContainer = document.querySelector('#add-item.form-modal');
+             formContainer.style.display = 'none';
+             clearAllInputValues();
+             hideAllErrorValidation();
+             
+        })
+   
+    
+    
+   
+   let submit = document.querySelector('.submit');
     submit.addEventListener('click', () => {
        
         let isValid = validateForm(); 
@@ -391,7 +400,7 @@ let displayController =  (() => {
             displayAllActiveToDos();
         }
     });
-      
+    
     return {
         displayAllActiveToDos
     }

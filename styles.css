@@ -49,8 +49,7 @@ body {
     margin-left: auto;
 }
 
-.form-modal,
-#edit-item.form-modal {
+.form-modal {
     display: none;
     position: fixed; 
     z-index: 1;
@@ -89,12 +88,12 @@ body {
     font-size: 1.2em;
 }
 
-.form-modal > .container > div > label{
+.form-modal > .container > div > label {
     display: block;
     margin-bottom: 5px;
  }
 
- .form-modal > .container > div > input{
+ .form-modal > .container > div > input {
     width: 97%;
     margin-bottom: 15px;
     padding: 1%;
@@ -205,11 +204,7 @@ button {
     color: #fff;
 
 }
-.flag:hover {
-   /* background: #ddd;
-    color: #000;
- */
-}
+
  .flag p:first-child{
     font-size: 0.7em;
     background: none!important;
