@@ -131,20 +131,6 @@ let displayController =  (() => {
         const priority = document.getElementById('high').checked = item.priority;
     }
 
-    function isNewObject() {
-
-        let h1Key = document.getElementsByTagName('#todo-item > h1')[0];
-         console.log(h1Key)
-        h1Key.getAttribute('key');
-       
-        console.log(h1Key.getAttribute('key'));
-        if(h1Key.getAttribute('key')){
-            return true
-        }
-    
-        else return false
-
-    }
     function getFormValues() {
        
         const title = document.getElementById('title').value;
@@ -198,8 +184,7 @@ let displayController =  (() => {
             
             hideAllErrorValidation();
 
-            let isDisplayType = window.getComputedStyle(formContainer).display;
-            toggle(formContainer, isDisplayType);
+            
             return true;
         }
         return false;
@@ -269,7 +254,7 @@ let displayController =  (() => {
 
         let editContainer = document.getElementById('add-item');
         editContainer.style.display = 'block';
-
+        appendFormTitle('Edit To Do')
         appendValues(item);
 
         //grab key values
@@ -397,13 +382,22 @@ let displayController =  (() => {
     }
 
    
-  
+    function appendFormTitle(titleName){
+        let formContainer = document.querySelector('#add-item.form-modal');
+        
+        let text = document.querySelector('.form-title');
+        text.innerHTML = '';
+        let title = document.createTextNode(titleName);
+        text.append(title);
+    }
 
     let addButton = document.querySelector('.add-item');
         addButton.addEventListener('click', () => {
-             let formContainer = document.querySelector('#add-item.form-modal');
+            let formContainer = document.querySelector('#add-item.form-modal');
              
-             formContainer.style.display = 'block';
+            formContainer.style.display = 'block';
+
+            appendFormTitle('Create New To Do');
              
         })
     
@@ -427,10 +421,12 @@ let displayController =  (() => {
         //is subimtting with errors
         if(isValid) {
             getFormValues();
-
+            let formContainer = document.querySelector('#add-item.form-modal');
+        
+            formContainer.style.display = 'none';
             clearAllInputValues();
 
-            //removes all ti=o dos on main screen
+            //removes all to dos on main screen
             document.querySelectorAll(".todo-item").forEach(el => el.remove());
             
             displayAllActiveToDos();
@@ -443,8 +439,9 @@ let displayController =  (() => {
 })(); //displayController() => 
 
 
-let helperFunctions = () => ({
+let helperFunctions = () => {
 
+    
+}
 
-})()
-   displayController.displayAllActiveToDos();
+displayController.displayAllActiveToDos();
