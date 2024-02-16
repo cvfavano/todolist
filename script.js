@@ -121,6 +121,21 @@ let displayController =  (() => {
         const note = document.getElementById('notes').value = '';
         const priority = document.getElementById('high').checked = true;
     }
+
+    function isNewObject() {
+
+        let h1Key = document.getElementsByTagName('#todo-item > h1')[0];
+         console.log(h1Key)
+        h1Key.getAttribute('key');
+       
+        console.log(h1Key.getAttribute('key'));
+        if(h1Key.getAttribute('key')){
+            return true
+        }
+    
+        else return false
+
+    }
     function getFormValues() {
        
         const title = document.getElementById('title').value;
@@ -180,8 +195,72 @@ let displayController =  (() => {
         }
         return false;
     }
+    function createToDoExpandedView(item){
+        const todoModalContainer = document.querySelector("#to-do.form-modal .container");
 
-    function createToDo(item) {
+        //clears modal
+        while(todoModalContainer.firstChild) {
+            todoModalContainer.removeChild(todoModalContainer.firstChild);
+        }
+       
+        const modalTextTitle = document.createTextNode(item.title);
+        const ModalH1 = document.createElement('h1');
+        todoModalContainer.append(ModalH1);
+        ModalH1.append(modalTextTitle)
+
+        const modalDescription = document.createElement('p');
+        modalDescription.append(document.createTextNode(item.description));
+
+        const modalDate = document.createElement('p');
+        modalDate.append(document.createTextNode(item.dueDate));
+
+        const modalPriority = document.createElement('p');
+        modalPriority.append(document.createTextNode(item.priority));
+
+        const modalStatus = document.createElement('p');
+        modalStatus.append(document.createTextNode(item.completed));
+
+        const modalNotes = document.createElement('p');
+        modalNotes.append(document.createTextNode(item.notes));
+
+        todoModalContainer.append(modalDescription,modalDate, modalPriority, modalStatus, modalNotes);
+
+        const modalExit = document.createElement('button');
+        modalExit.className = 'exit push toggle close-button';
+
+
+        const modalEdit = document.createElement('button');
+        modalEdit.className = 'edit push toggle';
+        const modalDelete = document.createElement('button');
+        modalDelete.className = 'delete push toggle';
+        todoModalContainer.append(modalEdit,modalExit,modalDelete)
+
+       const exitText = document.createTextNode('x');
+       const editText = document.createTextNode('edit');
+       const deleteText = document.createTextNode('delete');
+       modalDelete.append(deleteText);
+       modalExit.append(exitText);
+       modalEdit.append(editText);
+
+       modalExit.addEventListener('click', () => {
+        let formContainer = document.querySelector('#to-do.form-modal');
+        
+        formContainer.style.display = 'none';
+        });
+
+        modalEdit.addEventListener('click', () => {
+            let formContainer = document.querySelector('#to-do.form-modal');
+        
+            formContainer.style.display = 'none';
+
+            let editContainer = document.getElementById('add-item');
+  
+            editContainer.style.display = 'block';
+            console.log(item);
+         })
+    }
+
+    function createToDoSummary(item) {
             
         const mainDiv = document.querySelector('.main');
         const newDiv = document.createElement('div');
@@ -203,76 +282,13 @@ let displayController =  (() => {
         newLink.addEventListener('click', () => {
             console.log(item.key);
             console.log(item);
+            createToDoExpandedView(item);
+            
             const todoModal = document.querySelector("#to-do.form-modal");
-
-
-            const todoModalContainer = document.querySelector("#to-do.form-modal .container");
-
-//   console.log( todoModalContainer.value);
             todoModal.style.display = 'block';
+            let christa = isNewObject() ;
 
-            while(todoModalContainer.firstChild) {
-                todoModalContainer.removeChild(todoModalContainer.firstChild);
-            }
-        
-//        const modalDiv = document.createElement('div');
-         //   todoModalContainer.append(modalDiv);
-            const modalTextTitle = document.createTextNode(item.title);
-            const ModalH1 = document.createElement('h1');
-            todoModalContainer.append(ModalH1);
-            ModalH1.append(modalTextTitle)
-
-            const modalDescription = document.createElement('p');
-            modalDescription.append(document.createTextNode(item.description));
-
-            const modalDate = document.createElement('p');
-            modalDate.append(document.createTextNode(item.dueDate));
-
-            const modalPriority = document.createElement('p');
-            modalPriority.append(document.createTextNode(item.priority));
-
-            const modalStatus = document.createElement('p');
-            modalStatus.append(document.createTextNode(item.completed));
-
-            const modalNotes = document.createElement('p');
-            modalNotes.append(document.createTextNode(item.notes));
-
-            todoModalContainer.append(modalDescription,modalDate, modalPriority, modalStatus, modalNotes);
-
-            const modalExit = document.createElement('button');
-            modalExit.className = 'exit push toggle close-button';
-
-
-            const modalEdit = document.createElement('button');
-            modalEdit.className = 'edit push toggle';
-            const modalDelete = document.createElement('button');
-            modalDelete.className = 'delete push toggle';
-            todoModalContainer.append(modalEdit,modalExit,modalDelete)
-
-           const exitText = document.createTextNode('x');
-           const editText = document.createTextNode('edit');
-           const deleteText = document.createTextNode('delete');
-           modalDelete.append(deleteText);
-           modalExit.append(exitText);
-           modalEdit.append(editText);
-
-           modalExit.addEventListener('click', () => {
-                let formContainer = document.querySelector('#to-do.form-modal');
-                
-                formContainer.style.display = 'none';
-           });
-
-           modalEdit.addEventListener('click', () => {
-                let formContainer = document.querySelector('#to-do.form-modal');
-                
-                formContainer.style.display = 'none';
-
-                let editContainer = document.getElementById('add-item');
-          
-                editContainer.style.display = 'block';
-                console.log(item);
-           })
-
+            
         });
 
         const sidebar = document.createElement('div');
@@ -359,14 +375,14 @@ let displayController =  (() => {
 
 
         activeItems.forEach((item) => {
-            createToDo(item);
+            createToDoSummary(item);
         })
     }
 
    
   
 
-        let addButton = document.querySelector('.add-item');
+    let addButton = document.querySelector('.add-item');
         addButton.addEventListener('click', () => {
              let formContainer = document.querySelector('#add-item.form-modal');
              console.log(formContainer)
@@ -375,7 +391,7 @@ let displayController =  (() => {
         })
     
 
-        let exitButton = document.querySelector('.close-button');
+    let exitButton = document.querySelector('.close-button');
         exitButton.addEventListener('click', () => {
              let formContainer = document.querySelector('#add-item.form-modal');
              formContainer.style.display = 'none';
