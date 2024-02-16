@@ -122,6 +122,15 @@ let displayController =  (() => {
         const priority = document.getElementById('high').checked = true;
     }
 
+    function appendValues(item){
+
+        const title = document.getElementById('title').value = item.title;
+        const desc = document.getElementById('description').value = item.description;
+        const date = document.getElementById('dueDate').value = item.dueDate;
+        const note = document.getElementById('notes').value = item.notes;
+        const priority = document.getElementById('high').checked = item.priority;
+    }
+
     function isNewObject() {
 
         let h1Key = document.getElementsByTagName('#todo-item > h1')[0];
@@ -249,15 +258,23 @@ let displayController =  (() => {
         });
 
         modalEdit.addEventListener('click', () => {
-            let formContainer = document.querySelector('#to-do.form-modal');
-        
-            formContainer.style.display = 'none';
-
-            let editContainer = document.getElementById('add-item');
-  
-            editContainer.style.display = 'block';
-            console.log(item);
+            
+            editTodo(item);
          })
+    }
+
+    function editTodo(item){
+        let formContainer = document.querySelector('#to-do.form-modal');
+        formContainer.style.display = 'none';
+
+        let editContainer = document.getElementById('add-item');
+        editContainer.style.display = 'block';
+
+        appendValues(item);
+
+        //grab key values
+        //on submit, create new object
+
     }
 
     function createToDoSummary(item) {
@@ -286,7 +303,7 @@ let displayController =  (() => {
             
             const todoModal = document.querySelector("#to-do.form-modal");
             todoModal.style.display = 'block';
-            let christa = isNewObject() ;
+            
 
             
         });
@@ -385,7 +402,7 @@ let displayController =  (() => {
     let addButton = document.querySelector('.add-item');
         addButton.addEventListener('click', () => {
              let formContainer = document.querySelector('#add-item.form-modal');
-             console.log(formContainer)
+             
              formContainer.style.display = 'block';
              
         })
@@ -412,7 +429,10 @@ let displayController =  (() => {
             getFormValues();
 
             clearAllInputValues();
+
+            //removes all ti=o dos on main screen
             document.querySelectorAll(".todo-item").forEach(el => el.remove());
+            
             displayAllActiveToDos();
         }
     });
