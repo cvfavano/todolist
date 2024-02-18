@@ -6,7 +6,7 @@ let storageModel = (() => {
     console.log(data)
     
     //to create item in local storage, needs to be a string (stringify)
-    //use parse to retrived from storage and store as obj
+    //use parse to retrieve from storage and store as obj
     function createToDo(item) {
         let id = crypto.randomUUID();
         console.log(item)
@@ -153,8 +153,20 @@ let displayController =  (() => {
         document.getElementById('description').value = item.description;
         document.getElementById('dueDate').value = item.dueDate;
         document.getElementById('notes').value = item.notes;
-        console.log(document.querySelector('input[name=priority]:checked').value)
-        document.querySelector('input[name=priority]:checked').value = item.priority;
+        let identifier;
+        switch (item.priority) {
+            case '1':
+                identifier = 'high';
+                break
+            case '2':
+                identifier = 'medium';
+                break
+            default:
+                identifier = 'low';
+                break
+        }
+        document.getElementById(identifier).checked = true;
+        
     }
 
     function getFormValues() {
