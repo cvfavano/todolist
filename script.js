@@ -11,8 +11,8 @@ let storageModel = (() => {
         let id = crypto.randomUUID();
         console.log(item)
         data.setItem(`'${id}'`, JSON.stringify({
-            title:item.title,
-            description:item.description,
+            title: item.title,
+            description: item.description,
             dueDate: item.dueDate,         
             priority: item.priority,
             completed: item.completed,
@@ -28,13 +28,15 @@ let storageModel = (() => {
         let existingItem = JSON.parse(data.getItem(JSON.stringify(item.key)));
         
         existingItem = {
-            title: item.name,
-            description: item.desc,
-            dueDate: item.date,         
-            priority: item.priorityLevel,
-            completed: item.isDone,
+            title:item.title,
+            description:item.description,
+            dueDate: item.dueDate,         
+            priority: item.priority,
+            completed: item.completed,
             notes: item.note
         };
+
+      
         
         data.setItem(JSON.stringify(item.key), JSON.stringify(existingItem));
     }
@@ -148,10 +150,11 @@ let displayController =  (() => {
         let title = document.getElementById('title')
         title.value = item.title;
         title.setAttribute('key',item.key);
-        const desc = document.getElementById('description').value = item.description;
-        const date = document.getElementById('dueDate').value = item.dueDate;
-        const note = document.getElementById('notes').value = item.notes;
-        const priority = document.getElementById('high').checked = item.priority;
+        document.getElementById('description').value = item.description;
+        document.getElementById('dueDate').value = item.dueDate;
+        document.getElementById('notes').value = item.notes;
+        console.log(document.querySelector('input[name=priority]:checked').value)
+        document.querySelector('input[name=priority]:checked').value = item.priority;
     }
 
     function getFormValues() {
@@ -461,7 +464,7 @@ let displayController =  (() => {
 
 console.log(item)
             if (item.key =='' || item.key == null) { 
-                console.log();
+              
 
               storageModel.createToDo(
                 {title: item.title,
@@ -469,19 +472,19 @@ console.log(item)
                     dueDate: item.dueDate,         
                     priority:item.priority,
                     completed: item.completed,
-                     note: item.note}
-                );
+                    note: item.note
+                });
                
             }
             else{
                 storageModel.updateToDo({ 
                     key: item.key,
-                    title: item.name,
-                    desscription: item.desc,
-                    dueDate: item.date,         
-                    priority:item.priorityLevel,
-                    completed: item.isDone,
-                     note: item.note
+                    title: item.title,
+                    description: item.description,
+                    dueDate: item.dueDate,         
+                    priority:item.priority,
+                    completed: item.completed,
+                    note: item.note
                  });
             }
             
