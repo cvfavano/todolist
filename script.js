@@ -341,8 +341,6 @@ let displayController =  (() => {
             const todoModal = document.querySelector("#to-do.form-modal");
             todoModal.style.display = 'block';
             
-
-            
         });
 
         const sidebar = document.createElement('div');
@@ -474,12 +472,11 @@ let displayController =  (() => {
         if(isValid) {
             let item = getFormValues();
 
-console.log(item)
             if (item.key =='' || item.key == null) { 
               
 
               storageModel.createToDo(
-                {title: item.title,
+                {   title: item.title,
                     description: item.description,
                     dueDate: item.dueDate,         
                     priority:item.priority,
@@ -507,9 +504,7 @@ console.log(item)
             formContainer.style.display = 'none';
             clearAllInputValues();
 
-            //removes all to dos on main screen
-            document.querySelectorAll(".todo-item").forEach(el => el.remove());
-            
+           helperFunctions.clearToDoDisplay();
             displayAllActiveToDos();
         }
     });
@@ -520,9 +515,15 @@ console.log(item)
 })(); //displayController() => 
 
 
-let helperFunctions = () => {
+let helperFunctions = (() => {
 
-    
-}
+                //removes all to dos on main screen
+    let clearToDoDisplay = () =>    {        
+        document.querySelectorAll(".todo-item").forEach(el => el.remove());
+    }
+    return {
+        clearToDoDisplay
+    }
+})()
 
 displayController.displayAllActiveToDos();
