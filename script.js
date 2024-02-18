@@ -9,8 +9,8 @@ let storageModel = (() => {
     //use parse to retrieve from storage and store as obj
     function createToDo(item) {
         let id = crypto.randomUUID();
-        console.log(item)
-        data.setItem(`'${id}'`, JSON.stringify({
+        
+        data.setItem(`"${id}"`, JSON.stringify({
             title: item.title,
             description: item.description,
             dueDate: item.dueDate,         
@@ -35,9 +35,6 @@ let storageModel = (() => {
             completed: item.completed,
             notes: item.note
         };
-
-      
-        
         data.setItem(JSON.stringify(item.key), JSON.stringify(existingItem));
     }
 
@@ -66,9 +63,6 @@ let storageModel = (() => {
             allData.push(dataObj[key] = item)
             
         }
-        
-        console.log(dataObj)
-        console.log(allData)
     
         return allData;
     }
@@ -89,12 +83,19 @@ let storageModel = (() => {
 
         return allActiveArray;
     }
+
+    let deleteToDo = (key) => {
+        console.log(key)
+        localStorage.removeItem(`'${key}'`);
+        console.log(localStorage)
+    }
  
     return {
         createToDo,
         updateToDo,
         allToDos,
-        activeToDo
+        activeToDo,
+        deleteToDo
     }
 
 })() // storageModel() => toDoList, saveItem, createToDo
@@ -251,9 +252,10 @@ let displayController =  (() => {
         }
        
         const modalTextTitle = document.createTextNode(item.title);
-        const ModalH1 = document.createElement('h1');
-        todoModalContainer.append(ModalH1);
-        ModalH1.append(modalTextTitle)
+        const modalH1 = document.createElement('h1');
+        todoModalContainer.append(modalH1);
+        modalH1.append(modalTextTitle)
+        
 
         const modalDescription = document.createElement('p');
         modalDescription.append(document.createTextNode(item.description));
@@ -279,7 +281,8 @@ let displayController =  (() => {
         const modalEdit = document.createElement('button');
         modalEdit.className = 'edit push toggle';
         const modalDelete = document.createElement('button');
-        modalDelete.className = 'delete push toggle';
+        modalDelete.className = 'delete';
+        modalDelete.setAttribute('key',item.key);
         todoModalContainer.append(modalEdit,modalExit,modalDelete)
 
        const exitText = document.createTextNode('x');
@@ -295,10 +298,22 @@ let displayController =  (() => {
         formContainer.style.display = 'none';
         });
 
-        modalEdit.addEventListener('click', () => {
-            
+        modalEdit.addEventListener('click', () => {     
             updateTodo(item);
-         })
+        });
+        modalDelete.addEventListener('click', () => {
+            deleteTodo(item.key);
+        });
+    
+    }
+
+    function deleteTodo(key){
+        let formContainer = document.querySelector('#to-do.form-modal');
+        storageModel.deleteToDo(key); 
+        formContainer.style.display = 'none';
+        helperFunctions.clearToDoDisplay();
+        displayController.displayAllActiveToDos();
+
     }
 
     function updateTodo(item){
@@ -309,10 +324,6 @@ let displayController =  (() => {
         editContainer.style.display = 'block';
         appendFormTitle('Edit To Do')
         appendValues(item);
-
-        //grab key values
-        //on submit, create new object
-
     }
 
     function createToDoSummary(item) {
@@ -325,7 +336,7 @@ let displayController =  (() => {
         const newLink = document.createElement('button');
         const expandIcon = document.createElement('i');
         expandIcon.className = "fa-solid fa-expand";
-     //   expandIcon.append(document.createTextNode('x'))
+       // expandIcon.append(document.createTextNode('x'))
 
         const container = document.createElement('div');
         container.className = 'container';
@@ -433,7 +444,7 @@ let displayController =  (() => {
 
    
     function appendFormTitle(titleName){
-        let formContainer = document.querySelector('#add-item.form-modal');
+       // let formContainer = document.querySelector('#add-item.form-modal');
         
         let text = document.querySelector('.form-title');
         text.innerHTML = '';
@@ -451,19 +462,17 @@ let displayController =  (() => {
              
         })
     
-
     let exitButton = document.querySelector('.close-button');
         exitButton.addEventListener('click', () => {
              let formContainer = document.querySelector('#add-item.form-modal');
              formContainer.style.display = 'none';
              clearAllInputValues();
              hideAllErrorValidation();
-             
         })
+       
+  
    
-    
-    
-   
+        
    let submit = document.querySelector('.submit');
     submit.addEventListener('click', () => {
        
@@ -473,8 +482,6 @@ let displayController =  (() => {
             let item = getFormValues();
 
             if (item.key =='' || item.key == null) { 
-              
-
               storageModel.createToDo(
                 {   title: item.title,
                     description: item.description,
@@ -483,7 +490,6 @@ let displayController =  (() => {
                     completed: item.completed,
                     note: item.note
                 });
-               
             }
             else{
                 storageModel.updateToDo({ 
@@ -496,15 +502,13 @@ let displayController =  (() => {
                     note: item.note
                  });
             }
-            
-            
 
             let formContainer = document.querySelector('#add-item.form-modal');
         
             formContainer.style.display = 'none';
             clearAllInputValues();
 
-           helperFunctions.clearToDoDisplay();
+            helperFunctions.clearToDoDisplay();
             displayAllActiveToDos();
         }
     });
