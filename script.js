@@ -3,27 +3,53 @@
 let storageModel = (() => {
     let data = localStorage;
     
-    let createToDo = (name, desc, date, priorityLevel, isDone, note) => { 
-        saveItem({
-            title: name,
-            description: desc,
-            dueDate: date,         
-            priority: priorityLevel,
-            completed: isDone,
-            notes: note
-        }) ;
-    }
+    console.log(data)
     
-    function saveItem(item) {
+    //to create item in local storage, needs to be a string (stringify)
+    //use parse to retrived from storage and store as obj
+    function createToDo(item) {
         let id = crypto.randomUUID();
-        
-        data.setItem(`'${id}'`, JSON.stringify(
-            item
+        console.log(item)
+        data.setItem(`'${id}'`, JSON.stringify({
+            title:item.title,
+            description:item.description,
+            dueDate: item.dueDate,         
+            priority: item.priority,
+            completed: item.completed,
+            notes: item.note
+        }
         ));
-       // console.log(JSON.parse(data))
-       console.log(data)
+       
     }
  
+    function updateToDo(item){
+      //  let existingItem = data.parse.getItem(item.key);
+       console.log(item)
+        let existingItem = JSON.parse(data.getItem(JSON.stringify(item.key)));
+        
+        existingItem = {
+            title: item.name,
+            description: item.desc,
+            dueDate: item.date,         
+            priority: item.priorityLevel,
+            completed: item.isDone,
+            notes: item.note
+        };
+        
+        data.setItem(JSON.stringify(item.key), JSON.stringify(existingItem));
+    }
+
+    //     key: item.key,
+    // title: item.name,
+    // desscription: item.desc,
+    // dueDate: item.date,         
+    // priority:item.priorityLevel,
+    // completed: item.isDone,
+    //  note: item.note
+
+
+    //}
+
     let allToDos = () => {
    
         let dataObj = {};
@@ -32,6 +58,7 @@ let storageModel = (() => {
             let key = data.key(i);
            
             let item = JSON.parse( data.getItem(key) );
+          
             item['key'] = key.replace(/["']/g, "");
          
             allData.push(dataObj[key] = item)
@@ -49,11 +76,7 @@ let storageModel = (() => {
     let activeToDo = () => {
         let data = allToDos();
         
-       console.log(data)
-
-        
         function filterByActiveStatus(item) {
-           // console.log(item.completed)
             if (!item.completed )
                 return true
 
@@ -62,14 +85,12 @@ let storageModel = (() => {
 
         const allActiveArray =  data.filter(filterByActiveStatus);
 
-        console.log(allActiveArray);
         return allActiveArray;
     }
  
     return {
-    //    toDoList,
-       // saveItem,
         createToDo,
+        updateToDo,
         allToDos,
         activeToDo
     }
@@ -123,8 +144,10 @@ let displayController =  (() => {
     }
 
     function appendValues(item){
-
-        const title = document.getElementById('title').value = item.title;
+       
+        let title = document.getElementById('title')
+        title.value = item.title;
+        title.setAttribute('key',item.key);
         const desc = document.getElementById('description').value = item.description;
         const date = document.getElementById('dueDate').value = item.dueDate;
         const note = document.getElementById('notes').value = item.notes;
@@ -132,13 +155,28 @@ let displayController =  (() => {
     }
 
     function getFormValues() {
-       
-        const title = document.getElementById('title').value;
+        let key;
+        
+       const title = document.getElementById('title');
+       if (title.getAttribute != null) {
+             key = title.getAttribute('key');
+       }
+       else {key = ''}
+
+        const titleVal = document.getElementById('title').value;
         const desc = document.getElementById('description').value;
         const date = document.getElementById('dueDate').value;
         const note = document.getElementById('notes').value;
         const priority = document.querySelector('input[name=priority]:checked').value;
-        storageModel.createToDo(title,desc,date,priority,false,note); 
+        return {
+            key:key,
+            title:titleVal,
+            description:desc, 
+            dueDate: date,
+            priority:priority,
+            completed:false,
+            note:note
+        }; 
     }
     
     function checkValue(element) {
@@ -244,11 +282,11 @@ let displayController =  (() => {
 
         modalEdit.addEventListener('click', () => {
             
-            editTodo(item);
+            updateTodo(item);
          })
     }
 
-    function editTodo(item){
+    function updateTodo(item){
         let formContainer = document.querySelector('#to-do.form-modal');
         formContainer.style.display = 'none';
 
@@ -282,8 +320,7 @@ let displayController =  (() => {
         newLink.className = 'expand';
 
         newLink.addEventListener('click', () => {
-            console.log(item.key);
-            console.log(item);
+            
             createToDoExpandedView(item);
             
             const todoModal = document.querySelector("#to-do.form-modal");
@@ -420,7 +457,36 @@ let displayController =  (() => {
         let isValid = validateForm(); 
         //is subimtting with errors
         if(isValid) {
-            getFormValues();
+            let item = getFormValues();
+
+console.log(item)
+            if (item.key =='' || item.key == null) { 
+                console.log();
+
+              storageModel.createToDo(
+                {title: item.title,
+                    description: item.description,
+                    dueDate: item.dueDate,         
+                    priority:item.priority,
+                    completed: item.completed,
+                     note: item.note}
+                );
+               
+            }
+            else{
+                storageModel.updateToDo({ 
+                    key: item.key,
+                    title: item.name,
+                    desscription: item.desc,
+                    dueDate: item.date,         
+                    priority:item.priorityLevel,
+                    completed: item.isDone,
+                     note: item.note
+                 });
+            }
+            
+            
+
             let formContainer = document.querySelector('#add-item.form-modal');
         
             formContainer.style.display = 'none';
