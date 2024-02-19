@@ -86,7 +86,7 @@ let storageModel = (() => {
 
     let deleteToDo = (key) => {
         console.log(key)
-        localStorage.removeItem(`'${key}'`);
+        localStorage.removeItem(JSON.stringify(key));
         console.log(localStorage)
     }
  
