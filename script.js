@@ -100,7 +100,18 @@ let storageModel = (() => {
 
 })() // storageModel() => toDoList, saveItem, createToDo
 
-
+let toDoFactory = (title,description,dueDate, isComplete,priority,notes) => {
+    let key = crypto.randomUUID();
+    let todo = {
+    title : item.title,
+    description : item.description,
+    dueDate : item.dueDate,
+    isComplete : item.isComplete,
+    priority : item.priority,
+    notes : item.notes
+    }
+    return todo;
+}
 
 let displayController =  (() => {
 
@@ -281,7 +292,7 @@ let displayController =  (() => {
         const modalEdit = document.createElement('button');
         modalEdit.className = 'edit push toggle';
         const modalDelete = document.createElement('button');
-        modalDelete.className = 'delete';
+        modalDelete.className = 'delete push';
         modalDelete.setAttribute('key',item.key);
         todoModalContainer.append(modalEdit,modalExit,modalDelete)
 

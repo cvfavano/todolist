@@ -39,7 +39,9 @@ body {
     margin: 0 auto;
 }
 
-.add-item {
+.add-item,
+.edit, 
+.delete  {
     padding: 10px 15px;
     height: 40px;
     border-radius: 21px;
@@ -119,6 +121,11 @@ button {
     color: #fff;
 }
 
+
+
+button.exit {
+    padding: 2px 7px;
+}
 .close-button {
     grid-column-start: 2;
     justify-self: end ;
@@ -132,6 +139,9 @@ button {
 
 #to-do .container {
     position:relative;
+}
+#to-do h1 {
+    margin: 0;
 }
 .exit {
     position: absolute;
@@ -167,15 +177,19 @@ button {
 }
 
 .main {
-    max-width: 90%;
+    max-width: 1200px;
+   
+   
     display: flex;
     flex-wrap: wrap;
+    margin: 0 auto;
 }
 
 .todo-item {
     position: relative;
     display: flex;
     width: 33%;
+    min-width: 285px;
     max-width: 300px;
   /*  padding: 0 0 0 15px; */
     margin: 15px 15px 0 0 ;
@@ -309,4 +323,11 @@ background: #2D8633;
         background: none;
         border-color: none;
         border-style: none;
+}
+
+
+@media screen and (max-width: 450px) {
+    .todo-item {
+        margin: 15px auto;
+    }
 }
